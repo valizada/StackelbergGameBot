@@ -113,11 +113,4 @@ final class PseudoLeader
 
 		m_platformStub.publishPrice(m_type, 100);
 	}
-
-
-	public static void main(final String[] p_args)
-			throws RemoteException, NotBoundException
-	{
-		new PseudoLeader();
-	}
 }

@@ -42,11 +42,44 @@ final class SimpleLeader
 	{
 		m_platformStub.publishPrice(m_type, (float)maximise());
 
-		Record record = m_platformStub.query(PlayerType.LEADER, p_date);
-		m_platformStub.log(PlayerType.LEADER, "profit: " + calculateProfit(record.m_leaderPrice, record.m_followerPrice));
-
 	}
 
+    int p_steps = 0;
+	/**
+	 * You may want to delete this method if you don't want to do any
+	 * initialization
+	 * @param p_steps Indicates how many steps will the simulation perform
+	 * @throws RemoteException If implemented, the RemoteException *MUST* be
+	 * thrown by this method
+	 */
+	@Override
+	public void startSimulation(int p_steps)
+			throws RemoteException
+	{
+		super.startSimulation(p_steps);
+        this.p_steps = p_steps;
+		//TO DO: delete the line above and put your own initialization code here
+	}
+
+	/**
+	 * You may want to delete this method if you don't want to do any
+	 * finalization
+	 * @throws RemoteException If implemented, the RemoteException *MUST* be
+	 * thrown by this method
+	 */
+	@Override
+	public void endSimulation()
+			throws RemoteException
+	{
+        Record record;
+        double totalProfit = 0;
+        for (int i = 1; i <= p_steps; i++){
+            record = m_platformStub.query(PlayerType.LEADER, 100+i);
+
+            totalProfit += calculateProfit(record.m_leaderPrice, record.m_followerPrice);
+        }
+        m_platformStub.log(PlayerType.LEADER, "profit: " + totalProfit);
+	}
 
 	public float[] calculateAB() throws RemoteException {
 		Record record;
@@ -76,7 +109,6 @@ final class SimpleLeader
 		return (3+0.3*(ab[0]-ab[1])) / (2-0.6*ab[1]);
 	}
 
-
 	public double calculateProfit(float Ul, float Uf){
 		return (Ul - 1) * (2 - Ul + 0.3*Uf);
 	}
@@ -97,7 +129,6 @@ final class SimpleLeader
 	{
 		new SimpleLeader();
 	}
-
 
 
 	/**
