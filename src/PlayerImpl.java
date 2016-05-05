@@ -10,8 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
  * To implement some common method of players
  * @author Xin
  */
-public abstract class PlayerImpl
-	implements Player
+public abstract class PlayerImpl implements Player
 {
 	/* The stub of the platform */
 	protected Platform m_platformStub;
@@ -25,14 +24,14 @@ public abstract class PlayerImpl
 		m_type = p_type;
 		registerRMI();
 		registerPlatform(p_displayName);
+		// test change
 	}
 
 	/**
 	 * Register this instance to RMI registry
 	 * @throws RemoteException
 	 */
-	private void registerRMI()
-		throws RemoteException
+	private void registerRMI() throws RemoteException
 	{
 		final Player l_playerStub = (Player) UnicastRemoteObject.exportObject(this, 0);
 		final Registry l_registry = LocateRegistry.getRegistry();
