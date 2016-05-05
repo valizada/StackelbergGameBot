@@ -1,5 +1,7 @@
 import comp34120.ex2.PlayerImpl;
 import comp34120.ex2.PlayerType;
+import comp34120.ex2.Record;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -108,5 +110,14 @@ final class PseudoLeader
 		 * Submit your new price, and end your phase
 		 * m_platformStub.publishPrice(m_type, l_newPrice);
 		 */
+
+		m_platformStub.publishPrice(m_type, 100);
+	}
+
+
+	public static void main(final String[] p_args)
+			throws RemoteException, NotBoundException
+	{
+		new PseudoLeader();
 	}
 }

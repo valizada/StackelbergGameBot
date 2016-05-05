@@ -12,19 +12,16 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public abstract class PlayerImpl implements Player
 {
-	/* The stub of the platform test*/
+	/* The stub of the platform*/
 	protected Platform m_platformStub;
 	/* The type of this player, i.e. LEADER or FOLLOWER */
 	protected final PlayerType m_type;
 
-	protected PlayerImpl(final PlayerType p_type,
-		final String p_displayName)
-		throws RemoteException, NotBoundException
+	protected PlayerImpl(final PlayerType p_type,final String p_displayName) throws RemoteException, NotBoundException
 	{
 		m_type = p_type;
 		registerRMI();
 		registerPlatform(p_displayName);
-		// test change
 	}
 
 	/**
