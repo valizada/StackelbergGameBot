@@ -12,7 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public abstract class PlayerImpl implements Player
 {
-	/* The stub of the platform */
+	/* The stub of the platform test*/
 	protected Platform m_platformStub;
 	/* The type of this player, i.e. LEADER or FOLLOWER */
 	protected final PlayerType m_type;
