@@ -40,16 +40,19 @@ final class OurLeader
 		throws RemoteException
 	{
 
-        if (p_date == 101)
-            m_platformStub.publishPrice(m_type, (float) maximiseRecursive(theta));
-        else{
+        if (p_date == 101){
+			m_platformStub.publishPrice(m_type, (float) maximiseRecursive(theta));
+			System.out.println("a: " + theta.get(0) + " b: " + theta.get(1));
+		}
+		else{
             linearRecursive.addData(m_platformStub.query(PlayerType.LEADER, p_date-1));
             theta = linearRecursive.update(p_date-1);
             m_platformStub.publishPrice(m_type, (float) maximiseRecursive(theta));
         }
+
         // code for only 100 days
 //		m_platformStub.publishPrice(m_type, (float)maximise(p_date));
-//        m_platformStub.log(m_type, "current date: " + p_date);
+//      m_platformStub.log(m_type, "current date: " + p_date);
 	}
 
 
@@ -89,8 +92,9 @@ final class OurLeader
 			throws RemoteException
 	{
         Record record;
-        double totalProfit = 0;
-        for (int i = 1; i <= p_steps; i++){
+        float totalProfit = 0;
+
+		for (int i = 1; i <= p_steps; i++){
             record = m_platformStub.query(PlayerType.LEADER, 100+i);
 
             totalProfit += calculateProfit(record.m_leaderPrice, record.m_followerPrice);
@@ -149,7 +153,8 @@ final class OurLeader
         // todo: if 100, make it global, do not call many times.
          float[] ab = calculateAB100();
 
-        // With window
+//		 System.out.println("a100: " + ab[0] + " b100: " + ab[1]);
+		// With window
 //        float[] ab = calculateABWindow(100, currentDate);
         // m_platformStub.log(PlayerType.LEADER, "a: " + ab[0] + " b: " + ab[1]);
 

@@ -20,7 +20,7 @@ public class LinearRecursive {
     }
 
     // fogetting factor
-    Double lambda = 1.0;
+    Double lambda = 0.97;
     // prediction error
     DoubleMatrix P = new DoubleMatrix(2,2);
     // parameters
