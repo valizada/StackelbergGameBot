@@ -1,5 +1,6 @@
 import comp34120.ex2.Record;
 import org.jblas.DoubleMatrix;
+import org.jblas.FloatMatrix;
 import org.jblas.Solve;
 
 import java.util.ArrayList;
@@ -20,18 +21,18 @@ public class LinearRecursive {
     }
 
     // fogetting factor
-    Double lambda = 0.97;
+    Float lambda = 0.97f;
     // prediction error
-    DoubleMatrix P = new DoubleMatrix(2,2);
+    FloatMatrix P = new FloatMatrix(2,2);
     // parameters
-    DoubleMatrix theta;
+    FloatMatrix theta;
 
-    public DoubleMatrix baseCondition(){
+    public FloatMatrix baseCondition(){
 
         int dataSize = historicalData.size();
 
         for (int i = 0; i < dataSize; i++) {
-            DoubleMatrix phi = new DoubleMatrix(2,1);
+            FloatMatrix phi = new FloatMatrix(2,1);
             int rows = phi.rows;
             int cols = phi.columns;
 
@@ -39,51 +40,51 @@ public class LinearRecursive {
             phi.put(1,historicalData.get(i).m_leaderPrice);
 
             // todo: datasize-1 part
-            P = P.add(phi.mmul(phi.transpose()).mmul(Math.pow(lambda, dataSize-i)));
+            P = P.add(phi.mmul(phi.transpose()).mmul((float) Math.pow(lambda, dataSize-i-1)));
         }
 
-        theta = new DoubleMatrix(2,1);
+        theta = new FloatMatrix(2,1);
 
-        DoubleMatrix thetaFollow = new DoubleMatrix(2,1);
+        FloatMatrix thetaFollow = new FloatMatrix(2,1);
 
         for (int i = 0; i < dataSize; i++) {
-            DoubleMatrix phi = new DoubleMatrix(2,1);
+            FloatMatrix phi = new FloatMatrix(2,1);
 
             phi.put(0, 1);
             phi.put(1,historicalData.get(i).m_leaderPrice);
 
-            thetaFollow = thetaFollow.add(phi.mmul(historicalData.get(i).m_followerPrice).mmul(Math.pow(lambda, dataSize-i)));
+            // todo: datasize-1 part
+            thetaFollow = thetaFollow.add(phi.mmul(historicalData.get(i).m_followerPrice).mmul((float)Math.pow(lambda, dataSize-i-1)));
         }
 
-        double[][] forInverse = new double[2][2];
+        float[][] forInverse = new float[2][2];
 
         forInverse[0][0] = P.get(0);
         forInverse[0][1] = P.get(1);
         forInverse[1][0] = P.get(2);
         forInverse[1][1] = P.get(3);
 
-        P.print();
         forInverse = Inverse.invert(forInverse);
-        DoubleMatrix inverseOfP = new DoubleMatrix(forInverse);
-        inverseOfP.print();
+        FloatMatrix inverseOfP = new FloatMatrix(forInverse);
+
         theta = inverseOfP.mmul(thetaFollow);
 
         return theta;
     }
 
-    DoubleMatrix adjustingFactor;
+    FloatMatrix adjustingFactor;
 
-    public DoubleMatrix update(int date){
-        DoubleMatrix phi = new DoubleMatrix(2,1);
+    public FloatMatrix update(int date){
+        FloatMatrix phi = new FloatMatrix(2,1);
 
         phi.put(0, 1);
         //todo: date -2 must be checked
         phi.put(1, historicalData.get(date-1).m_leaderPrice);
 
-        DoubleMatrix adjustingFactorDeter = phi.transpose().mmul(P).mmul(phi).add(lambda);
+        FloatMatrix adjustingFactorDeter = phi.transpose().mmul(P).mmul(phi).add(lambda);
         adjustingFactor = P.mmul(phi).div(adjustingFactorDeter);
 
-        DoubleMatrix Pnum, Pdenom;
+        FloatMatrix Pnum, Pdenom;
 
         Pnum = P.mmul(phi).mmul(phi.transpose()).mmul(P);
 
@@ -91,7 +92,7 @@ public class LinearRecursive {
 
         P = P.sub(Pnum.div(Pdenom)).mmul(1/lambda);
 
-        DoubleMatrix followerPrice = new DoubleMatrix(1,1);
+        FloatMatrix followerPrice = new FloatMatrix(1,1);
         //todo: date -2 must be checked
         followerPrice.put(0, historicalData.get(date-1).m_followerPrice);
         theta = theta.add(adjustingFactor.mmul((followerPrice.sub(phi.transpose().mmul(theta)))));

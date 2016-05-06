@@ -2,6 +2,7 @@ import comp34120.ex2.PlayerImpl;
 import comp34120.ex2.PlayerType;
 import comp34120.ex2.Record;
 import org.jblas.DoubleMatrix;
+import org.jblas.FloatMatrix;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -57,7 +58,7 @@ final class OurLeader
 
 
     LinearRecursive linearRecursive;
-    DoubleMatrix theta;
+	FloatMatrix theta;
     int p_steps = 0;
 	/**
 	 * You may want to delete this method if you don't want to do any
@@ -153,7 +154,7 @@ final class OurLeader
         // todo: if 100, make it global, do not call many times.
          float[] ab = calculateAB100();
 
-//		 System.out.println("a100: " + ab[0] + " b100: " + ab[1]);
+		 System.out.println("a100: " + ab[0] + " b100: " + ab[1]);
 		// With window
 //        float[] ab = calculateABWindow(100, currentDate);
         // m_platformStub.log(PlayerType.LEADER, "a: " + ab[0] + " b: " + ab[1]);
@@ -162,7 +163,7 @@ final class OurLeader
 	}
 
 
-    public double maximiseRecursive(DoubleMatrix theta) throws RemoteException {
+    public double maximiseRecursive(FloatMatrix theta) throws RemoteException {
 
         return (3+0.3*(theta.get(0)-theta.get(1))) / (2-0.6*theta.get(1));
     }

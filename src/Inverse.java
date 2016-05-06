@@ -6,34 +6,34 @@ import java.util.Scanner;
 public class Inverse {
     public static void main(String argv[])
     {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the dimension of square matrix: ");
-        int n = input.nextInt();
-        double a[][]= new double[n][n];
-        System.out.println("Enter the elements of matrix: ");
-        for(int i=0; i<n; i++)
-            for(int j=0; j<n; j++)
-                a[i][j] = input.nextDouble();
-
-        double d[][] = invert(a);
-
-        System.out.println("The inverse is: ");
-        for (int i=0; i<n; ++i)
-        {
-            for (int j=0; j<n; ++j)
-            {
-                System.out.print(d[i][j]+"  ");
-            }
-            System.out.println();
-        }
-        input.close();
+//        Scanner input = new Scanner(System.in);
+//        System.out.println("Enter the dimension of square matrix: ");
+//        int n = input.nextInt();
+//        double a[][]= new double[n][n];
+//        System.out.println("Enter the elements of matrix: ");
+//        for(int i=0; i<n; i++)
+//            for(int j=0; j<n; j++)
+//                a[i][j] = input.nextDouble();
+//
+//        double d[][] = invert(a);
+//
+//        System.out.println("The inverse is: ");
+//        for (int i=0; i<n; ++i)
+//        {
+//            for (int j=0; j<n; ++j)
+//            {
+//                System.out.print(d[i][j]+"  ");
+//            }
+//            System.out.println();
+//        }
+//        input.close();
     }
 
-    public static double[][] invert(double a[][])
+    public static float[][] invert(float[][] a)
     {
         int n = a.length;
-        double x[][] = new double[n][n];
-        double b[][] = new double[n][n];
+        float x[][] = new float[n][n];
+        float b[][] = new float[n][n];
         int index[] = new int[n];
         for (int i=0; i<n; ++i)
             b[i][i] = 1;
@@ -68,7 +68,7 @@ public class Inverse {
 // Method to carry out the partial-pivoting Gaussian
 // elimination.  Here index[] stores pivoting order.
 
-    public static void gaussian(double a[][], int index[])
+    public static void gaussian(float[][] a, int index[])
     {
         int n = index.length;
         double c[] = new double[n];
@@ -80,10 +80,10 @@ public class Inverse {
         // Find the rescaling factors, one from each row
         for (int i=0; i<n; ++i)
         {
-            double c1 = 0;
+            float c1 = 0;
             for (int j=0; j<n; ++j)
             {
-                double c0 = Math.abs(a[i][j]);
+                float c0 = Math.abs(a[i][j]);
                 if (c0 > c1) c1 = c0;
             }
             c[i] = c1;
@@ -93,10 +93,10 @@ public class Inverse {
         int k = 0;
         for (int j=0; j<n-1; ++j)
         {
-            double pi1 = 0;
+            float pi1 = 0;
             for (int i=j; i<n; ++i)
             {
-                double pi0 = Math.abs(a[index[i]][j]);
+                float pi0 = Math.abs(a[index[i]][j]);
                 pi0 /= c[index[i]];
                 if (pi0 > pi1)
                 {
@@ -111,7 +111,7 @@ public class Inverse {
             index[k] = itmp;
             for (int i=j+1; i<n; ++i)
             {
-                double pj = a[index[i]][j]/a[index[j]][j];
+                float pj = a[index[i]][j]/a[index[j]][j];
 
                 // Record pivoting ratios below the diagonal
                 a[index[i]][j] = pj;
