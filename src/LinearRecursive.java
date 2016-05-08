@@ -1,7 +1,5 @@
 import comp34120.ex2.Record;
-import org.jblas.DoubleMatrix;
 import org.jblas.FloatMatrix;
-import org.jblas.Solve;
 
 import java.util.ArrayList;
 
@@ -21,7 +19,7 @@ public class LinearRecursive {
     }
 
     // fogetting factor
-    Float lambda = 0.97f;
+    Float lambda = 0.99f;
     // prediction error
     FloatMatrix P = new FloatMatrix(2,2);
     // parameters

@@ -1,7 +1,6 @@
 import comp34120.ex2.PlayerImpl;
 import comp34120.ex2.PlayerType;
 import comp34120.ex2.Record;
-import org.jblas.DoubleMatrix;
 import org.jblas.FloatMatrix;
 
 import java.rmi.NotBoundException;
@@ -14,11 +13,11 @@ import java.util.TimerTask;
  * A very simple leader implementation that only generates random prices
  * @author Xin
  */
-final class OurLeader
+final class LinearLeader
 	extends PlayerImpl
 {
 	ArrayList<Record> historicalData;
-	private OurLeader()
+	private LinearLeader()
 		throws RemoteException, NotBoundException
 	{
 		super(PlayerType.LEADER, "Our Leader");
@@ -175,7 +174,7 @@ final class OurLeader
 	public static void main(final String[] p_args)
 		throws RemoteException, NotBoundException
 	{
-		new OurLeader();
+		new LinearLeader();
 	}
 
 	/**
